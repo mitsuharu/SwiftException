@@ -1,6 +1,6 @@
 # SwiftException
 
-Swift の Runtime Exception をキャッチしたいなと試した話
+Swift の Runtime Exception はキャッチできるのかと試した話
 
 ## やりたいこと
 
@@ -26,17 +26,17 @@ do{
 }
 ```
 
-上記の単純な配列indexぐらいなら事前に確認すれば問題ない．しかしながら，いくつもの処理が複雑で絡み合うシーンに出くわしたとき，事前確認が複雑なときにそれらが起こす例外をキャッチしたいときがある．
+上記の単純な配列indexぐらいなら事前に確認すれば問題ない．しかしながら，いくつもの処理が複雑で絡み合うシーンに出くわしたとき，サードライブラリなどで手出しができないとき，事前確認が複雑なときにそれらが起こす例外をキャッチしたいときがある．
 
-Objective-Cはこれらの例外が取れていた．それなら，Swift内で例外をキャッチしたい処理をObjective-Cで行えばいるかなとやってみた．
+Objective-Cはこれらの例外が取れていた．それなら，Swift内で例外をキャッチしたい処理をObjective-Cで行えばできるかなとやってみた．
 
-## 処理をブロック化して例外をキャッチする
+# 処理をブロック化して例外をキャッチする
 
-Objective-Cでは処理をブロックで渡して，例外が起こったときのコールバックを用意した．
+Objective-Cで，処理をブロックで渡して，例外が起こったときのコールバックを行うクラス ```ExcBlock``` を用意した．
 
 ExcBlock.h
 
-```
+```Objective-C
 typedef void (^Block)(void);
 typedef void (^Completion)( NSException *exception );
 
@@ -49,7 +49,7 @@ typedef void (^Completion)( NSException *exception );
 
 ExcBlock.m
 
-```
+```Objective-C
 @implementation ExcBlock
 
 + (void)executeBlock:(Block)block completion:(Completion)completion
@@ -69,7 +69,7 @@ ExcBlock.m
 
 Swift で呼び出して，故意に例外を起こして確認した．しかしながら，ブロック内の例外がキャッチされることはなく，そのままクラッシュした．
 
-```
+```Swift
 ExcBlock.execute({
             let temps = [0, 1, 2]
             print("\(temps[10])")
@@ -79,13 +79,13 @@ ExcBlock.execute({
         }
 ```
 
-## 個別に例外をキャッチする
+# 個別に例外をキャッチする
 
-汎用的にSwiftのコードをブロックで渡したからキャッチできなかったと考えたので，処理を丸々Objective-Cに渡してみたらどうだろうか．クラスを上書きして，例外が起こる箇所の専用メソッドを用意する．
+汎用的にSwiftのコードをブロックで渡したからキャッチできなかったと考えた．処理を丸々Objective-Cに渡してみたらどうだろうか．クラスを上書きして，例外が起こる箇所の専用メソッドを用意する．
 
 仮に UITableView の reloadRows の例外をキャッチする関数を用意した．
 
-```
+```Objective-C
 typedef void (^ExcCompletion)( NSException *exception );
 
 @interface ExcTableView : UITableView
@@ -97,7 +97,7 @@ typedef void (^ExcCompletion)( NSException *exception );
 @end
 ```
 
-```
+```Objective-C
 @implementation ExcTableView
 
 - (void)exc_reloadRowsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths
@@ -113,13 +113,12 @@ typedef void (^ExcCompletion)( NSException *exception );
 }
 
 @end
-
 ```
 
 Swiftでは故意に例外が起こるようにようにしたところ，アプリはクラッシュせずに例外を取得できた．しかしながら，個別にメソッドを用意しなければならないので現実的ではない．
 
 
-```
+```Swift
 func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
