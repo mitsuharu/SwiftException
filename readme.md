@@ -36,7 +36,7 @@ Objective-Cで，処理をブロックで渡して，例外が起こったとき
 
 ExcBlock.h
 
-```Objective-C
+```Objective-C:ExcBlock.h
 typedef void (^Block)(void);
 typedef void (^Completion)( NSException *exception );
 
