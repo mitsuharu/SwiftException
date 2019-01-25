@@ -39,40 +39,14 @@ class ViewController: UIViewController {
         self.tableView.register(UINib(nibName: "VanillaCell", bundle: nil),
                                 forCellReuseIdentifier: "VanillaCell")
         self.view.addSubview(self.tableView)
-        
-        self.tableView.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
-        self.tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
-        self.tableView.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
-        self.tableView.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
-        
     }
     
     func removeTableView()  {
-        
         guard
             let tableView = self.tableView,
             let _ = self.tableView.superview else {
             return
         }
-        
-        var cnsts = [NSLayoutConstraint]()
-        let anchors:[NSLayoutConstraint.Attribute] = [.top, .bottom, .right, .left]
-        for cnst in self.view.constraints{
-            guard
-                let f = cnst.firstItem as? UIView,
-                let s = cnst.secondItem as? UIView else{
-                    continue
-            }
-            if f == tableView
-                && s == self.view
-                && anchors.contains(cnst.firstAttribute)
-                && cnst.firstAttribute == cnst.secondAttribute
-                && cnst.relation == .equal{
-                cnsts.append(cnst)
-            }
-        }
-        self.view.removeConstraints(cnsts)
-        
         tableView.dataSource = nil
         tableView.delegate = nil
         tableView.removeFromSuperview()
