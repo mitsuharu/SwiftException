@@ -76,10 +76,10 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate{
             print("[exc_reloadRows] exception:\(exception)")
             
             self.alert = {
-                let alert = UIAlertController(title: "例外が起こりました",
+                let alert = UIAlertController(title: "exception",
                                               message: exception.description,
                                               preferredStyle: UIAlertController.Style.alert)
-                alert.addAction(UIAlertAction(title: "復元する",
+                alert.addAction(UIAlertAction(title: "fix",
                                               style: UIAlertAction.Style.default,
                                               handler: { (action) in
                                                 self.addTableView()
