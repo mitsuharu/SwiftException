@@ -2,7 +2,11 @@
 
 Swift の Runtime Exception はキャッチできるのかと試した話
 
-## やりたいこと
+## ライブラリ
+
+ライブラリ [mitsuharu/MEOException: catch runtime exception for UITableView.reloadCells() in Swift](https://github.com/mitsuharu/MEOException) を公開しました．
+
+# やりたいこと
 
 Swiftの例外キャッチは ```throw``` を実装したメソッドに対して，行える．
 
