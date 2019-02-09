@@ -140,14 +140,17 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate{
                                                  for: indexPath)
         let sec = indexPath.section
         var str: String = ""
+        var sub: String? = nil
         if sec == 0{
             str = "配列の範囲外の要素にアクセスする"
         }else if sec == 1{
             str = "範囲外のセルを更新する (tap:\(self.counter))"
         }else{
             str = "配列の範囲外の要素にアクセスする(Fortify)"
+            sub = "Edit Scheme から debug excutable を無効にする"
         }
         cell.textLabel?.text = str
+        cell.detailTextLabel?.text = sub
         return cell
     }
     
