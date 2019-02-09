@@ -2,6 +2,11 @@
 
 Swift の Runtime Exception はキャッチできるのかと試した話
 
+## Fortify
+
+Fortify.swift は [johnno1962/Fortify: Making Swift more robust](https://github.com/johnno1962/Fortify) から追加してください
+
+
 ## ライブラリ
 
 ライブラリ [mitsuharu/MEOException: catch runtime exception for UITableView.reloadCells() in Swift](https://github.com/mitsuharu/MEOException) を公開しました．
