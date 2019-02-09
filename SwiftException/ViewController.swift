@@ -16,9 +16,8 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.title = "デモ"
         self.addTableView()
-        
     }
     
     func addTableView(){
@@ -54,10 +53,8 @@ extension ViewController{
     func demo1(){
         ExcBlock.execute({
             let temps = [0, 1, 2]
-            let temp = temps[10]
-            print("temp = \(temp)")
+            let _ = temps[10]
         }) { (exception) in
-            print(exception)
             self.alert = {
                 let alert = UIAlertController(title: "exception",
                                               message: exception.description,
@@ -65,21 +62,17 @@ extension ViewController{
                 alert.addAction(UIAlertAction(title: "OK",
                                               style: UIAlertAction.Style.default,
                                               handler:nil))
+                self.present(alert, animated: true, completion: nil)
                 return alert
             }()
-            if let alert = self.alert{
-                self.present(alert, animated: true, completion: nil)
-            }
         }
     }
     
     // TableViewの範囲外のセルを更新する
     func demo2(){
-        
         self.counter += 1
-        let ip = IndexPath(row: 100, section: 100)
-        
-        self.tableView.exc_reloadRows(at: [ip], with: .automatic) { (exception) in
+        let indexPath = IndexPath(row: 100, section: 100)
+        self.tableView.exc_reloadRows(at: [indexPath], with: .automatic) { (exception) in
             self.alert = {
                 let alert = UIAlertController(title: "exception",
                                               message: exception.description,
@@ -89,19 +82,41 @@ extension ViewController{
                                               handler: { (action) in
                                                 self.addTableView()
                 }))
+                self.present(alert, animated: true, completion: nil)
                 return alert
             }()
-            if let alert = self.alert{
-                self.present(alert, animated: true, completion: nil)
-            }
         }
     }
+    
+    // 配列の範囲外の要素にアクセスする
+    func demoFortify(){
+        do {
+            // Edit Scheme から debug excutable を無効にする
+            try Fortify.exec {
+                let temps = [0, 1, 2]
+                let _ = temps[10]
+            }
+        }
+        catch {
+            self.alert = {
+                let alert = UIAlertController(title: "exception",
+                                              message: error.localizedDescription,
+                                              preferredStyle: UIAlertController.Style.alert)
+                alert.addAction(UIAlertAction(title: "OK",
+                                              style: UIAlertAction.Style.default,
+                                              handler:nil))
+                self.present(alert, animated: true, completion: nil)
+                return alert
+            }()
+        }
+    }
+    
 }
 
 extension ViewController: UITableViewDataSource, UITableViewDelegate{
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 3
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -109,7 +124,11 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate{
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "デモ \(section + 1)"
+        var str = "デモ \(section + 1)"
+        if section == 2{
+            str = "おまけ"
+        }
+        return str
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -119,28 +138,29 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "VanillaCell",
                                                  for: indexPath)
-        
+        let sec = indexPath.section
         var str: String = ""
-        if indexPath.section == 0{
+        if sec == 0{
             str = "配列の範囲外の要素にアクセスする"
-        }else if indexPath.section == 1{
+        }else if sec == 1{
             str = "範囲外のセルを更新する (tap:\(self.counter))"
+        }else{
+            str = "配列の範囲外の要素にアクセスする(Fortify)"
         }
-        
         cell.textLabel?.text = str
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-
         let sec = indexPath.section
         if sec == 0{
             self.demo1()
         }else if sec == 1{
             self.demo2()
+        }else{
+            self.demoFortify()
         }
-        
     }
     
 }
