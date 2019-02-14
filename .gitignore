@@ -28,3 +28,5 @@ Carthage/Build
 *.swp
 !.gitkeep
 .DS_Store
+
+Fortify.swift

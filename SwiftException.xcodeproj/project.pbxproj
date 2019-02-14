@@ -18,6 +18,7 @@
 		9B5E0C5221F2B6790043855F /* ExcTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B5E0C5121F2B6790043855F /* ExcTableView.m */; };
 		9B6B7DB421FB2E12006AC3C0 /* VanillaCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B6B7DB221FB2E12006AC3C0 /* VanillaCell.swift */; };
 		9B6B7DB521FB2E12006AC3C0 /* VanillaCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B6B7DB321FB2E12006AC3C0 /* VanillaCell.xib */; };
+		9BC4E20E220E93EE00586909 /* Fortify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC4E20D220E93ED00586909 /* Fortify.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +59,7 @@
 		9B5E0C5121F2B6790043855F /* ExcTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExcTableView.m; sourceTree = "<group>"; };
 		9B6B7DB221FB2E12006AC3C0 /* VanillaCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VanillaCell.swift; sourceTree = "<group>"; };
 		9B6B7DB321FB2E12006AC3C0 /* VanillaCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VanillaCell.xib; sourceTree = "<group>"; };
+		9BC4E20D220E93ED00586909 /* Fortify.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fortify.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +115,7 @@
 				9B5E0C4121F29EB10043855F /* objc */,
 				9B5E0C1321F29E4C0043855F /* AppDelegate.swift */,
 				9B5E0C1521F29E4C0043855F /* ViewController.swift */,
+				9BC4E20D220E93ED00586909 /* Fortify.swift */,
 				9B5E0C1721F29E4C0043855F /* Main.storyboard */,
 				9B5E0C1A21F29E4E0043855F /* Assets.xcassets */,
 				9B5E0C1C21F29E4E0043855F /* LaunchScreen.storyboard */,
@@ -292,6 +295,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9B6B7DB421FB2E12006AC3C0 /* VanillaCell.swift in Sources */,
+				9BC4E20E220E93EE00586909 /* Fortify.swift in Sources */,
 				9B5E0C5221F2B6790043855F /* ExcTableView.m in Sources */,
 				9B5E0C4421F29EB10043855F /* ExcBlock.m in Sources */,
 				9B5E0C1621F29E4C0043855F /* ViewController.swift in Sources */,
